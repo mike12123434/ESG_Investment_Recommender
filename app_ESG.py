@@ -32,12 +32,20 @@ ESG_KEYWORDS = {
 
 # ========== Web Scraping Functions ==========
 
+# 修改後的建議邏輯
 def scrape_esg_etfs():
-    """Scrape ESG ETF list from Taiwan Stock Exchange"""
     try:
-        url = "https://www.twse.com.tw/zh/esg-index-product/etf"
-        headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'}
+        # 使用證交所的 API 接口而非網頁 URL
+        url = "https://www.twse.com.tw/rwd/zh/esg-index-product/etf?response=json"
+        headers = {
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36...',
+            'Referer': 'https://www.twse.com.tw/zh/esg-index-product/etf' # 必須加入來源頁面
+        }
         response = requests.get(url, headers=headers, timeout=15)
+        data = response.json()
+        
+        # 從 JSON 中解析出 ETF 代碼與名稱 (結構需根據 API 回傳調整)
+        # ... 處理邏輯 ...
         
         if response.status_code != 200:
             return None
